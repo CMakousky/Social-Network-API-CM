@@ -106,12 +106,12 @@ export const deleteThought = async (req: Request, res: Response) => {
     }
 }
 
-// Adds a tag to a thought. This method is unique in that we add the entire body of the tag rather than the ID with the mongodb $addToSet operator.
-export const addTag = async (req: Request, res: Response) => {
+// Adds a reaction to a thought. This method is unique in that we add the entire body of the reaction rather than the ID with the mongodb $addToSet operator.
+export const addReaction = async (req: Request, res: Response) => {
     try {
         const thought = await Thought.findOneAndUpdate(
         { _id: req.params.thoughtId },
-        { $addToSet: { tags: req.body } },
+        { $addToSet: { reactions: req.body } },
         { runValidators: true, new: true }
         );
 
@@ -127,12 +127,12 @@ export const addTag = async (req: Request, res: Response) => {
     }
 }
 
-// Remove thought tag. This method finds the thought based on ID. It then updates the tags array associated with the thought in question by removing it's tagId from the tags array.
-export const removeTag = async (req: Request, res: Response) => {
+// Remove thought reaction. This method finds the thought based on ID. It then updates the reactions array associated with the thought in question by removing it's reactionId from the reactions array.
+export const removeReaction = async (req: Request, res: Response) => {
     try {
         const thought = await Thought.findOneAndUpdate(
         { _id: req.params.thoughtId },
-        { $pull: { tags: { tagId: req.params.tagId } } },
+        { $pull: { tags: { reactionId: req.params.reactionId } } },
         { runValidators: true, new: true }
         );
 
