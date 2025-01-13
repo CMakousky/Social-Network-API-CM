@@ -39,6 +39,69 @@ export const createUser = async (req: Request, res: Response) => {
     }
 }
 
+// Update a specified user profile
+export const updateUser = async (req: Request, res: Response) => {
+    try {
+        const updatedUser = await User.findOneAndUpdate(
+        { _id: req.params.userId },
+        { $set: req.body },
+        { runValidators: true, new: true }
+        );
+
+        if (!updatedUser) {
+        return res.status(404).json({ message: 'No user with this id!' });
+        }
+
+        res.json(updatedUser);
+        return;
+    } catch (err) {
+        res.status(500).json(err);
+        return;
+    }
+}
+
+// Add a new friend to a user profile
+export const addFriend = async (req: Request, res: Response) => {
+    try {
+        const user = await User.findOneAndUpdate(
+        { _id: req.params.userId },
+        { $addToSet: { friends: req.params.friendId } },
+        { runValidators: true, new: true }
+        );
+
+        if (!user) {
+        return res.status(404).json({ message: 'No user with this id!' });
+        }
+
+        res.json(user);
+        return;
+    } catch (err) {
+        res.status(500).json(err);
+        return;
+    }
+}
+
+// Remove a friend from a user profile
+export const removeFriend = async (req: Request, res: Response) => {
+    try {
+        const friend = await User.findOneAndUpdate(
+        { _id: req.params.userId },
+        { $pull: { friends: req.params.friendId } },
+        { runValidators: true, new: true }
+        );
+
+        if (!friend) {
+        return res.status(404).json({ message: 'No friendable user with this id!' });
+        }
+
+        res.json(friend);
+        return;
+    } catch (err) {
+        res.status(500).json(err);
+        return;
+    }
+}
+
 // Delete a user and associated thoughts
 export const deleteUser = async (req: Request, res: Response) => {
     try {
@@ -49,7 +112,7 @@ export const deleteUser = async (req: Request, res: Response) => {
         }
 
         await Thought.deleteMany({ _id: { $in: user.thoughts } });
-        res.json({ message: 'User and associated apps deleted!' })
+        res.json({ message: 'User and associated thoughts deleted!' })
         return;
     } catch (err) {
         res.status(500).json(err);

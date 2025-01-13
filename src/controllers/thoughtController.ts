@@ -127,12 +127,34 @@ export const addReaction = async (req: Request, res: Response) => {
     }
 }
 
+// Updates and reaction using the findOneAndUpdate method. Uses the ID, and the $set operator in mongodb to inject the request body. Enforces validation.
+export const updateReaction = async (req: Request, res: Response) => {
+    try {
+        const reaction = await Thought.findOneAndUpdate(
+        { _id: req.params.thoughtId },
+        { $set: { reactions: { reactionId: req.params.reactionId, reactionBody: req.body.reactionBody, username: req.body.username } } },
+        { runValidators: true, new: true }
+        );
+
+        if (!reaction) {
+        return res.status(404).json({ message: 'No reaction with this id!' });
+        }
+
+        res.json(reaction);
+        return;
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+        return;
+    }
+}
+
 // Remove thought reaction. This method finds the thought based on ID. It then updates the reactions array associated with the thought in question by removing it's reactionId from the reactions array.
 export const removeReaction = async (req: Request, res: Response) => {
     try {
         const thought = await Thought.findOneAndUpdate(
         { _id: req.params.thoughtId },
-        { $pull: { tags: { reactionId: req.params.reactionId } } },
+        { $pull: { reactions: { reactionId: req.params.reactionId } } },
         { runValidators: true, new: true }
         );
 

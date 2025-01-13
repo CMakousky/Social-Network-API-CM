@@ -22,8 +22,8 @@ const userSchema = new Schema<IUser>(
             type: String,
             unique: true,
             required: true,
-            // Attempting to use Regular Expression to match the ending of the email address to a permutation of @*.com, @*.org, @*.net, or @*.gov
-            match: /^\@*\.(?:com|org|net|gov)$/
+            // Attempting to use Regular Expression to match the ending of the email address to a permutation of *@*.com, *@*.org, *@*.net, or *@*.gov
+            // match: /^*\@*\.(?:com|org|net|gov)$/
         },
     thoughts: [
         {
