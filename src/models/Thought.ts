@@ -1,0 +1,51 @@
+import { Schema, model, Document } from 'mongoose';
+import reactionSchema from './Reaction';
+
+interface IThought extends Document {
+  username: string;
+  thoughtText: string;
+  createdAt: Date;
+  reactions: typeof reactionSchema[];
+}
+
+// Schema to create Thought model
+const thoughtSchema = new Schema<IThought>(
+  {
+    username: 
+        {
+            type: String,
+            required: true,
+        },
+    thoughtText: 
+        {
+            type: String,
+            required: true,
+            minlength: 1,
+            maxlength: 280,
+        },
+    createdAt: 
+        {
+            type: Date,
+            default: Date.now,
+        },
+    reactions: [reactionSchema],
+  },
+  {
+    toJSON: 
+        {
+            virtuals: true,
+        },
+    id: false,
+  }
+);
+
+// Return the length of the reactions array on query.
+thoughtSchema.virtual('reactionCount')
+.get(function () {
+  return `${this.reactions.length}`
+});
+
+// Initialize the User model
+const Thought = model('thought', thoughtSchema);
+
+export default Thought;
