@@ -4,7 +4,7 @@ import { User, Thought } from '../models/index.js';
 // Get all users
 export const getUsers = async (_req: Request, res: Response) => {
     try {
-        const users = await User.find();
+        const users = await User.find().select('-__v');
         res.json(users);
     } catch (err) {
         res.status(500).json(err);

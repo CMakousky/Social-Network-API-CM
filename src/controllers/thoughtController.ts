@@ -4,7 +4,7 @@ import { User, Thought } from '../models/index.js';
 // Function to get all of the thoughts by invoking the find() method with no arguments.
 export const getThoughts = async (_req: Request, res: Response) => {
     try {
-        const thoughts = await Thought.find();
+        const thoughts = await Thought.find().select('-__v');
         res.json(thoughts);
     } catch (err) {
         res.status(500).json(err);
@@ -14,7 +14,7 @@ export const getThoughts = async (_req: Request, res: Response) => {
 // Gets a single thought using the findOneAndUpdate method. We pass in the ID of the thought and then respond with it, or an error if not found
 export const getSingleThought = async (req: Request, res: Response) => {
     try {
-        const thought = await Thought.findOne({ _id: req.params.thoughtId });
+        const thought = await Thought.findOne({ _id: req.params.thoughtId }).select('-__v');
 
         if (!thought) {
         return res.status(404).json({ message: 'No thought with that ID' });
