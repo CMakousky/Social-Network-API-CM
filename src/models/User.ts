@@ -22,8 +22,11 @@ const userSchema = new Schema<IUser>(
             type: String,
             unique: true,
             required: true,
-            // Attempting to use Regular Expression to match the ending of the email address to a permutation of *@*.com, *@*.org, *@*.net, or *@*.gov
-            // match: /^*\@*\.(?:com|org|net|gov)$/
+            // Using regular expression from https://regex101.com/r/lHs2R3/1 to check for any combination of words separated by '-' or '.' on the left side of the '@' character
+            // with at least two instances of any combination of words and '-' separated by '.' on the right side of the '@' character.
+            // This should accept only entries that are of a pattern such as 
+            // apple.orange.banana@hotmail.com, or apple-orange-banana@custom.mailbox.org, or apple-orange.banana@internet.net
+            match: /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$/
         },
     thoughts: [
         {
