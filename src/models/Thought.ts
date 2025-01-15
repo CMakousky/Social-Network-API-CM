@@ -1,10 +1,10 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document, Date } from 'mongoose';
 import Reaction from './Reaction.js';
 
 interface IThought extends Document {
   username: string;
   thoughtText: string;
-  createdAt: string;
+  createdAt: Date;
   reactions: typeof Reaction[];
 }
 
@@ -26,7 +26,7 @@ const thoughtSchema = new Schema<IThought>(
     createdAt: 
         {
             type: String,
-            default: Date.toString,
+            default: Date(),
         },
     reactions: [Reaction],
   },

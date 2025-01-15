@@ -1,10 +1,10 @@
-import { Schema, Document, ObjectId, Types } from 'mongoose';
+import { Schema, Document, ObjectId, Types, Date } from 'mongoose';
 
 interface IReaction extends Document {
     reactionId: ObjectId;
     reactionBody: string;
     username: string;
-    createdAt: string;
+    createdAt: Date;
 }
 
 const reactionSchema = new Schema<IReaction>(
@@ -28,7 +28,7 @@ const reactionSchema = new Schema<IReaction>(
         createdAt: 
             {
                 type: String,
-                default: Date.toString,
+                default: Date(),
             },
     },
     {
