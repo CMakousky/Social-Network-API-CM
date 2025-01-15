@@ -20,7 +20,9 @@ Use your favorite software package manager, such as Node Package Manager, to ins
 
 ## Usage
 
-Start the Social-Network-API-CM server with the "start" script in the package.json file. Use your favorite API development platform, such as Insomnia, to execute the application functions.
+Start the Social-Network-API-CM server with the "start" script in the package.json file. Use your favorite API development platform, such as Insomnia, to execute the application functions. See the link below for a short video demonstration of the Social-Network-API-CM in action.
+
+[Video Demo](https://drive.google.com/file/d/1vxR0M-b9au4QWJ5t7COZnSiltZ9p9JHB/view?usp=sharing)
 
 ### /api/users
 
