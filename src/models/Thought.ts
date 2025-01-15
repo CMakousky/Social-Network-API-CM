@@ -4,7 +4,7 @@ import Reaction from './Reaction.js';
 interface IThought extends Document {
   username: string;
   thoughtText: string;
-  createdAt: Date;
+  createdAt: string;
   reactions: typeof Reaction[];
 }
 
@@ -25,8 +25,8 @@ const thoughtSchema = new Schema<IThought>(
         },
     createdAt: 
         {
-            type: Date,
-            default: Date.now,
+            type: String,
+            default: Date.toString,
         },
     reactions: [Reaction],
   },
