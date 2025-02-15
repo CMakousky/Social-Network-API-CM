@@ -3,7 +3,7 @@
 
 ## Description
 
-A social network API that handles "Users", "Thoughts", and "Reactions".
+A RESTful social network API that handles "Users", "Thoughts", and "Reactions".
 
 ## Table of Contents
 
